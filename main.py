@@ -1,0 +1,51 @@
+import random
+import sys
+#from merge import stochastic_merge
+from walker import Walker
+import pickle
+
+def main():
+    
+    target_file = sys.argv[1]
+    print(target_file)
+    w = Walker(True)
+    error,env = w.analyze(target_file)
+    #d = env.get_node_env()
+    #l = list(d.items())
+    #random.shuffle(l)
+    #d_shuffled = dict(l)
+    #env.node_env=d_shuffled
+    h = []
+    env.output_env(h)
+    print("\n".join(h));quit()
+    #print(env.node_env)
+    #print(env.children_envs)
+    #for value in env.node_env.values():
+    #    value.get_expression(h)
+    #print("\n".join(h))
+    #print(env.node_env['g'].getExpression())
+    #error,allPaths = a.analyze(target_file)
+    #print(allPaths.getNodeString())
+    #print(pretty_print(allPaths))
+
+    ##target_file = "test.php"
+    #target_file = "sample2.php"
+    #target_file_2 = "h.php"
+    #a1 = Walker()
+#a2 = Walker()
+
+    #functions,allPaths = a1.analyze(target_file)
+    #functions_2,allPaths_2 = a2.analyze(target_file_2)
+
+    #merged_function_graphs, merged_graph = stochastic_merge(
+    #        allPaths,functions,
+    #        allPaths_2,functions_2)
+
+    ###print(allPaths_2.getString())
+    ###print(pretty_print(functions_2,allPaths_2))
+    ##print(merged_graph.getString())
+    #print(pretty_print(merged_function_graphs,merged_graph))
+
+if __name__ == "__main__":
+    main()
+    #print(sys.argv[1])

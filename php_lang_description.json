@@ -1,0 +1,60 @@
+{
+    "OpNodes": {
+        "MiddleOpNodes": {
+            "Expr_BinaryOp_Plus": "+",
+            "Expr_BinaryOp_Coalesce": "??",
+            "Expr_BinaryOp_LogicalAnd": "and",
+            "Expr_BinaryOp_Greater": ">",
+            "Expr_BinaryOp_Concat": ".",
+            "Expr_BinaryOp_Mod": "%",
+            "Expr_BinaryOp_Identical": "===",
+            "Expr_BinaryOp_NotIdentical": "!==",
+            "Expr_BinaryOp_Minus": "-",
+            "Expr_BinaryOp_Mul": "*",
+            "Expr_BinaryOp_Div": "/",
+            "Expr_BinaryOp_GreaterOrEqual": ">=",
+            "Expr_BinaryOp_Smaller": "<",
+            "Expr_BinaryOp_SmallerOrEqual": "<=",
+            "Expr_BinaryOp_BitwiseAnd": "&",
+            "Expr_BinaryOp_LogicalOr": "||",
+            "Expr_BinaryOp_BooleanOr": "or",
+            "Expr_BinaryOp_BooleanAnd": "and",
+            "Expr_BinaryOp_Equal": "==",
+            "Expr_BinaryOp_NotEqual": "!=",
+            "Expr_BinaryOp_BitwiseXor": "^",
+            "Expr_BinaryOp_BitwiseOr": "|",
+            "Expr_BinaryOp_ShiftRight": ">>",
+            "Expr_BinaryOp_ShiftLeft": "<<",
+            "Expr_BinaryOp_Pow": "**"
+        },
+        "FrontOpNodes": {
+            "Expr_List": "list",
+            "Expr_BooleanNot": "!",
+            "Stmt_Unset": "unset",
+            "Expr_ErrorSuppress": "@",
+            "Expr_UnaryMinus": "-",
+            "Expr_Cast_Int": "(int)",
+            "Expr_Cast_String": "(string)",
+            "Expr_Cast_Double": "(double)",
+            "Expr_Cast_Bool": "(bool)",
+            "Expr_Empty": "empty",
+            "Expr_PreInc": "++",
+            "Expr_PreDec": "--",
+            "Expr_BitwiseNot": "~"
+        },
+        "RearOpNodes": {
+            "Expr_PostInc": "++",
+            "Expr_PostDec": "--"
+        },
+        "InnerOpNodes": {
+            "Expr_AssignOp_Mul": "*=",
+            "Expr_AssignOp_Minus": "-=",
+            "Expr_AssignOp_Plus": "+=",
+            "Expr_AssignOp_Div": "/=",
+            "Expr_AssignRef": "=&",
+            "Expr_AssignOp_Concat": ".=",
+            "Expr_AssignOp_Mod": "%=",
+            "Expr_AssignOp_Coalesce": "??="
+        }
+    }
+}

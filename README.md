@@ -68,8 +68,6 @@ python prepare.py
 # Convert the starting corpus into SeqIR
 python preload.py
 
-# Build PHP with desired options
-
 # Run fuzzer
 python fuzzer.py
 

@@ -1,13 +1,13 @@
-# Phuzzilli
+# SeqFuzz
 
 **A Blackbox IR-based PHP Fuzzer**
 
-Phuzzilli is a blackbox fuzzer specifically designed for the **PHP interpreter**.  
+SeqFuzz is a blackbox fuzzer specifically designed for the **PHP interpreter**.  
 It discovers bugs by performing mutations on a custom intermediate representation called **SeqIR**, rather than mutating raw PHP source code.
 
-## What is Phuzzilli?
+## What is SeqFuzz?
 
-Phuzzilli fuzzes the PHP interpreter by:
+SeqFuzz fuzzes the PHP interpreter by:
 
 - Maintaining a corpus of programs represented in **SeqIR**
 - Applying structured mutations to SeqIR sequences

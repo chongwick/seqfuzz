@@ -39,10 +39,6 @@ class Walker():
     def parse_file_string(self,start_token,stop_token):
         return self.file_string[start_token:stop_token+1]
 
-    # Let me make this very clear. Return Statements Return Nodes
-    # Easy.
-    # The confusing part is the relational database and it's not that bad when
-    # you actually take the time to think about it.
     def eval_node(self,node, env, class_id=""):
         if self.debug == True: print("eval_node:", self.get_node_type(node))
 
@@ -77,10 +73,6 @@ class Walker():
 
     def eval_Expr_Assign(self,node,env,class_id=""):
         self.dangling_call = False
-        # CTSU
-        # I don't really know here. If we rewrite an environment variable
-        # the original statement is removed. Maybe we want a second variable
-        # to take the value/statement of the old variable
         var = node['var']
         expr = node['expr']
         assert(self.get_node_type(var) == "Expr_Variable" or
@@ -99,8 +91,6 @@ class Walker():
             name.reverse()
             name = "->".join(f"{x}" for x in name)
         elif self.get_node_type(var) == "Expr_ArrayDimFetch":
-            # To be true to the original, we really should make a copy of a leafnodearray
-            # but idrgafatp
             array_var = self.eval_node(var['var'],env)
             array_dim = None
             if var['dim'] != None:
@@ -131,7 +121,6 @@ class Walker():
             env.set_node(name,evaled_expr)
         return
 
-    #Property fetch, class declaration. these are all gonna be a little bit dirty for now
     def eval_Expr_PropertyFetch(self,node,env,class_id=""):
         print(json.dumps(node,indent=4))
         obj_name = None
@@ -304,8 +293,7 @@ class Walker():
         return ret_node 
 
     def eval_Stmt_Function(self,node,env,class_id):
-        # We simply want to build the internal environment of the function.
-        # Chill out. it's good. for now, the undefined parameters are just
+        # for now, the undefined parameters are just
         # null nodes. when the function is called, we'll simply update
         # the environment. easy peasy. -lebron james
         func_name = node['name']['name']
@@ -333,25 +321,12 @@ class Walker():
         return
 
     def eval_Stmt_Class(self,node,env,class_id):
-        #print(json.dumps(node,indent=4))
-        #class_name = node['name']['name']
-        #properties = []
-        #methods = []
-        #for stmt in node['stmts']:
-        #    if stmt['nodeType'] == "Stmt_Property":
-        #        print(stmt['props'][0]['name']['name'])
-        #quit()
-        # This is dirty, but come back to this later if time permits
-        #print(json.dumps(node,indent=4))
         start_token = node['attributes']['startFilePos']
         end_token = node['attributes']['endFilePos']
         expression_string = self.parse_file_string(start_token,end_token)
         class_name = node['name']['name']
         self.master.add_class_def(class_name,expression_string)
         return
-
-    #def eval_Stmt_Trait(self,node,env,class_id):
-    #    ...
 
     def eval_Expr_New(self,node,env,class_id):
         args = node['args']
@@ -517,12 +492,9 @@ class Walker():
                 case_env = switch_env.spawn_env("Flow",flow_type="case_default")
             case_env.set_condition(None,case_cond.get_name())
             for stmt in case['stmts']:
-                #we should evaluate statements in parent environment scope but whateever
                 self.eval_node(stmt,case_env)
         switch_env.set_condition(conditions,cond.get_name())
 
-    # This is gonna suck
-    # this needs a lot more work
     def eval_Stmt_Foreach(self,node,env,class_id):
         # This covers the basics
         cond = self.eval_node(node["expr"],env)
@@ -530,8 +502,6 @@ class Walker():
         tmp_env.set_condition(cond,cond.get_name())
         for_var = node['valueVar']['name']
         by_ref = node['byRef']
-        # This is a weird quirk of PHP where teh for_var is still in scope
-        # after the loop's completion
         env.set_node(for_var,GenericSeqNode("$"+for_var))
 
         tmp_env.set_node(for_var,GenericSeqNode("$"+for_var))
@@ -541,8 +511,6 @@ class Walker():
             self.eval_node(stmt,tmp_env)
         return
 
-        # This is dirty and should be done correctly, but we're kinda vibing too hard rn
-        # to quit.
     def eval_Stmt_For(self,node,env,class_id):
         tmp_env = env.spawn_env("Flow",flow_type="for")
         self.eval_node(node["init"][0],tmp_env) # we at least need to evaluate the var
@@ -550,10 +518,6 @@ class Walker():
         tmp_env.set_for_var(for_var_name)
         tmp_env.get_node(for_var_name).set_name("$"+for_var_name)
         init = tmp_env.get_node(for_var_name)
-        #cond = self.eval_node(node["cond"][0],tmp_env)
-        #loop = self.eval_node(node["loop"][0],tmp_env)
-        #init = self.parse_file_string(node["init"][0]['attributes']['startFilePos'],
-        #                              node["init"][0]['attributes']['endFilePos'],)
         cond = self.parse_file_string(node["cond"][0]['attributes']['startFilePos'],
                                       node["cond"][0]['attributes']['endFilePos'],)
         loop = self.parse_file_string(node["loop"][0]['attributes']['startFilePos'],
@@ -564,7 +528,6 @@ class Walker():
         return
 
     def eval_Expr_Throw(self,node,env,class_id):
-        #figure this out later
         return
 
     def eval_Stmt_Finally(self,node,env,class_id):
@@ -640,8 +603,6 @@ class Walker():
         ret_val = self.eval_node(node['expr'],env)
         env.set_node(node=GenericCallSeqNode(self.master.get_rel_db,
                                              'return',ret_val))
-        #ret_val = self.eval_node(node['expr'],env)
-        #env.set_node("RETURN",ret_val)
         return 
     
     def eval_Expr_Exit(self,node,env,class_id):

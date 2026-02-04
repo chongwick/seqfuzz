@@ -39,8 +39,6 @@ class FuncSeqNode(SeqNode):
             self.printed = True
             ret_expr = "{v} = {f}(".format(v=self.name,
                                            f=self.func_name)
-            #I can make list comprehensions much much worse
-            #don't complain ㅅㅂㄴㅁ
             args = [self.get_rel_val(a).get_expression(pp_env) for a in self.arguments]
             for a in args:
                 ret_expr += a +","
@@ -139,7 +137,6 @@ class PropertyFetchNode(SeqNode):
             ret_expr = ""
             if self.dependency != None:
                 self.dependency.get_expression(tmp_v)
-                #raise ValueError("PropertyFetch")
                 ret_expr = "\n".join(tmp_v)
                 ret_expr += "\n{v} = {on}->{mn};".format(v=self.name,
                                                       on=self.dependency.get_name(),
@@ -149,10 +146,6 @@ class PropertyFetchNode(SeqNode):
                 ret_expr += "\n{v} = ${on}->{mn};".format(v=self.name,
                                                       on=self.obj_name,
                                                       mn=self.property_name)
-            #args = [a.get_expression(pp_env) for a in self.arguments]
-            #for a in args:
-            #    ret_expr += a +","
-            #ret_expr += ");"
             pp_env.append(ret_expr)
         return self.name
 
@@ -339,7 +332,6 @@ class ArraySeqNode(SeqNode):
             pp_env.append(ret_expr)
         return self.name
 
-# This might be a little dirty idk it's late
 class ArrayValueNode(GenericSeqNode):
     def __init__(self,value,arr_name,node_type=None,dependency=None):
         self.value = value
@@ -371,7 +363,7 @@ class FlexArrayDimFetchNode(SeqNode):
         self.name = new_name()
         self.printed = False
         
-    def get_expression(self,pp_env): # this is just experimental. ykwtd
+    def get_expression(self,pp_env): 
         if not self.printed:
             self.printed = True
             #node = self.get_rel_val(self.node_key)
@@ -424,7 +416,7 @@ class MiddleOpNode(OPNode):
     def get_node_expression(self):
         return [self, self.left.get_node_expression(),self.right.get_node_expression()]
 
-    def get_expression(self,pp_env): # this is just experimental. ykwtd
+    def get_expression(self,pp_env):
         if not self.printed:
             self.printed = True
             left = self.get_rel_val(self.left_key)
@@ -467,7 +459,7 @@ class FrontOpNode(OPNode):
     def getNodeExpression(self):
         return [self, self.node.getNodeExpression()]
 
-    def get_expression(self,pp_env): # this is just experimental. ykwtd
+    def get_expression(self,pp_env):
         if not self.printed:
             self.printed = True
             node = self.get_rel_val(self.node_key)
@@ -477,7 +469,6 @@ class FrontOpNode(OPNode):
             pp_env.append(ret_expr)
         return self.name
 
-# this is not correct
 class InnerOpNode(FrontOpNode):
     def get_expression(self,pp_env):
         if not self.printed:

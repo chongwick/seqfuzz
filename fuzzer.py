@@ -86,9 +86,7 @@ def main():
                     if stochastic_splice_controlflow(target,splice) == False:
                         stochastic_splice_dataflow(target,splice)
             elif strategy == 1:
-                # L O L
                 trees = [_load_pickle(choice(seeds)) for _ in range(randint(2,8))]
-                # Also terrible practice. target should consistently be consistent
                 target = rando_max(trees)
 
             if(random.choice([True,False,False])):
@@ -125,33 +123,6 @@ def main():
                 os.remove(php_file)
         except Exception as e:
             continue
-
-    #for seed in seeds:
-
-    #print(target_file)
-    #a = Walker()
-    #allPaths = a.analyze(target_file)
-    #print(pretty_print(allPaths))
-    #with open("g","wb") as f:
-    #    pickle.dump([allPaths],f,protocol=pickle.HIGHEST_PROTOCOL)
-
-    ##target_file = "test.php"
-    #target_file = "sample2.php"
-    #target_file_2 = "h.php"
-    #a1 = Walker()
-#a2 = Walker()
-
-    #functions,allPaths = a1.analyze(target_file)
-    #functions_2,allPaths_2 = a2.analyze(target_file_2)
-
-    #merged_function_graphs, merged_graph = stochastic_merge(
-    #        allPaths,functions,
-    #        allPaths_2,functions_2)
-
-    ###print(allPaths_2.getString())
-    ###print(pretty_print(functions_2,allPaths_2))
-    ##print(merged_graph.getString())
-    #print(pretty_print(merged_function_graphs,merged_graph))
 
 if __name__ == "__main__":
     main()

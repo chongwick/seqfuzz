@@ -41,7 +41,6 @@ class Seq: #ControlTree
             self.all_nodes.append(node)
 
     def get_rel_db(self):
-        #return self.relational_database
         env = self
         while env.parent_env != None:
             env = env.parent_env
@@ -116,7 +115,6 @@ class Seq: #ControlTree
             array_push(self.node_env,new_env)
             #for control flow manipulation
             array_push(self.children_envs[env_type],new_env)
-            #array_push(self.children_envs[env_type],new_env) 
         else:
             new_env = Seq(self,self.node_env.copy(),root)
         return new_env
@@ -131,9 +129,6 @@ class Seq: #ControlTree
             env = env.parent_env
         return env.all_nodes
 
-    # An annoyingingly necessary function because of the way
-    # function nodes were implemented
-    # Hopefully all these annoyances don't hurt me 희망밖에 없음
     def add_fn_dependency(self,name,dependency):
         self.children_envs["Function"][name] = dependency
 
@@ -146,31 +141,9 @@ class Seq: #ControlTree
                 
         for func_env in self.children_envs["Function"].values():
             func_env.output_env(output_str)
-        #for func_name,func_env in self.children_envs["Function"].items():
-        #    func_prototype = "function {}(".format(func_name)
-        #    for param in func_env.get_params().values():
-        #        func_prototype += param.get_name()
-        #        if param.get_value() != None: #i.e. the param has a default
-        #            func_prototype += "={},".format(param.get_value())
-        #            param.set_value(param.get_name()) # this is a hacky
-        #                                              # scumbag trick to redirect
-        #                                              # subsequent nodes correctly
-        #                                              # but it works cleanly tbh
-        #                                              # 좆머거라
-        #        else:
-        #            func_prototype += ","
-        #    func_prototype += ")\n{"
-        #    output_str.append(func_prototype)
-        #    func_env.output_env(output_str)
-        #    ret_value = func_env.get_node("RETURN")
-        #    if ret_value != None:
-        #        output_str.append("return {};".format(ret_value.get_name()))
-        #    output_str.append("}")
 
         for value in self.node_env.values():
             value.get_expression(output_str)
-        #for value in self.node_env.values():
-        #    value.get_expression(output_str)
 
 class FunctionBranch(Seq):
     def __init__(self,parent,rel_db,func_name,node_env=None):
@@ -183,7 +156,6 @@ class FunctionBranch(Seq):
         self.parent_env = parent
         self.all_nodes = []
         self.params = {}
-        #I'm assuming functions can't have functions. something's gonna break if not
         self.children_envs = {"Function":{},
                               "Flow":{}}
 
@@ -331,7 +303,6 @@ class FlowBranch(Seq):
             ret_expr = "{ce} \nwhile({cv})".format(ce=cond_expr,
                                                    cv=self.conditional_variable)
 
-        # This one is gonna have to break some of the standards we have set 
         elif self.flow_type == "for":
             tmp = []
             init = self.conditional_statements[0]

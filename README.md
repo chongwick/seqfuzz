@@ -56,22 +56,20 @@ The sequential structure and node annotations enable maximum flexibility with mu
 
 SeqIR nodes are visited sequentially. Nodes dependencies are recursively printed to prevent undefined references.
 
-## Features (planned / current)
-### Current
-- Blackbox fuzzing with semantic-aware mutations via structured IR
-### Planned
-- Expansion to cover more PHP syntax
-- SeqIR's node annotations form a def-use chain and can thus be used in a separate taint analysis tool.
-
 ## Requirements
 
 - PHP 7.4+
 - A build of PHP compiled with debug symbols / sanitizers recommended for best bug detection
 
 ## Installation
+# Prepare the starting corpus
+python prepare.py
 
-```bash
-# Clone the repository
-git clone https://github.com/chongwick/phuzzilli.git
-cd phuzzilli
+# Convert the starting corpus into SeqIR
+python preload.py
+
+# Build PHP with desired options
+
+# Run fuzzer
+python fuzzer.py
 

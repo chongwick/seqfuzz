@@ -3,6 +3,7 @@ import sys
 #from merge import stochastic_merge
 from walker import Walker
 import pickle
+from mutator import *
 
 def main():
     
@@ -17,7 +18,8 @@ def main():
     #env.node_env=d_shuffled
     h = []
     env.output_env(h)
-    print("\n".join(h));quit()
+    print("\n".join(h));
+    modify_control_param(env,env)
     #print(env.node_env)
     #print(env.children_envs)
     #for value in env.node_env.values():

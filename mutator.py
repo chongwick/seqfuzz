@@ -61,13 +61,29 @@ def rando_super_max(trees:list):
     relationships = []
     relationships = [relationships + t.get_rel_db() for t in trees][0]
 
-def modify_control_param(target_env):
-    if len(target_env.children_envs["Flow"]) != 0:
-        ...
+def modify_control_param(target_env,splice_env):
+    if (len(target_env.children_envs["Flow"]) != 0 and 
+        len(splice_env.children_envs["Flow"]) != 0):
+        target_cond_idx = random.choice(list(target_env.children_envs["Flow"].keys()))
+        splice_cond_idx = random.choice(list(splice_env.children_envs["Flow"].keys()))
+        target_cond = target_env.children_envs["Flow"][target_cond_idx]
+        splice_cond = splice_env.children_envs["Flow"][splice_cond_idx]
+        if target_cond == None or splice_cond == None:
+            return
+        else:
+            target_env.children_envs["Flow"][target_cond_idx] = splice_cond
 
 def modify_control_body(target_env):
-    if len(target_env.children_envs["Flow"]) != 0:
-        ...
+    if (len(target_env.children_envs["Flow"]) != 0 and 
+        len(splice_env.children_envs["Flow"]) != 0):
+        target_cond_idx = random.choice(list(target_env.children_envs["Flow"].keys()))
+        splice_cond_idx = random.choice(list(splice_env.children_envs["Flow"].keys()))
+        target_cond = target_env.children_envs["Flow"][target_cond_idx]
+        splice_cond = splice_env.children_envs["Flow"][splice_cond_idx]
+        if target_cond == None or splice_cond == None:
+            return
+        else:
+            target_env.children_envs["Flow"][target_cond_idx] = splice_cond
 
 def modify_value(target_env):
     val_nodes = [i for i in target_env.output_all_nodes() if isinstance(i,GenericSeqNode)]

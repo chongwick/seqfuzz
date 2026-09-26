@@ -73,7 +73,7 @@ def modify_control_param(target_env,splice_env):
         else:
             target_env.children_envs["Flow"][target_cond_idx] = splice_cond
 
-def modify_control_body(target_env):
+def modify_control_body(target_env,splice_env):
     if (len(target_env.children_envs["Flow"]) != 0 and 
         len(splice_env.children_envs["Flow"]) != 0):
         target_cond_idx = random.choice(list(target_env.children_envs["Flow"].keys()))
@@ -87,9 +87,9 @@ def modify_control_body(target_env):
 
 def modify_value(target_env):
     val_nodes = [i for i in target_env.output_all_nodes() if isinstance(i,GenericSeqNode)]
-    if len(op_nodes) > 0:
-        for _ in range(random.randint(0,len(op_nodes))):
-            target = random.choice(op_nodes)
+    if len(val_nodes) > 0:
+        for _ in range(random.randint(0,len(val_nodes))):
+            target = random.choice(val_nodes)
             target.set_value(random.choice(["PHP_INT_MAX","PHP_FLOAT_MAX","-1","0"]))
 
 def modify_operation(target_env):
